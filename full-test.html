@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet.draw vector editing handlers</title>
+
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="Leaflet-MiniMap-master/dist/Control.MiniMap.min.css">
+    <link rel="stylesheet" type="text/css" href="Leaflet.Legend-master/src/leaflet.legend.css">
+    <link rel="stylesheet" type="text/css" href="mapa.css">
+    <script src="src/Leaflet.draw.js"></script>
+    <script src="src/Leaflet.Draw.Event.js"></script>
+    <link rel="stylesheet" href="src/leaflet.draw.css" />
+
+    <script src="src/Toolbar.js"></script>
+    <script src="src/Tooltip.js"></script>
+
+    <script src="src/ext/GeometryUtil.js"></script>
+    <script src="src/ext/LatLngUtil.js"></script>
+    <script src="src/ext/LineUtil.Intersect.js"></script>
+    <script src="src/ext/Polygon.Intersect.js"></script>
+    <script src="src/ext/Polyline.Intersect.js"></script>
+    <script src="src/ext/TouchEvents.js"></script>
+
+    <script src="src/draw/DrawToolbar.js"></script>
+    <script src="src/draw/handler/Draw.Feature.js"></script>
+    <script src="src/draw/handler/Draw.SimpleShape.js"></script>
+    <script src="src/draw/handler/Draw.Polyline.js"></script>
+    <script src="src/draw/handler/Draw.Marker.js"></script>
+    <script src="src/draw/handler/Draw.Circle.js"></script>
+    <script src="src/draw/handler/Draw.CircleMarker.js"></script>
+    <script src="src/draw/handler/Draw.Polygon.js"></script>
+    <script src="src/draw/handler/Draw.Rectangle.js"></script>
+
+
+    <script src="src/edit/EditToolbar.js"></script>
+    <script src="src/edit/handler/EditToolbar.Edit.js"></script>
+    <script src="src/edit/handler/EditToolbar.Delete.js"></script>
+
+    <script src="src/Control.Draw.js"></script>
+
+    <script src="src/edit/handler/Edit.Poly.js"></script>
+    <script src="src/edit/handler/Edit.SimpleShape.js"></script>
+    <script src="src/edit/handler/Edit.Rectangle.js"></script>
+    <script src="src/edit/handler/Edit.Marker.js"></script>
+    <script src="src/edit/handler/Edit.CircleMarker.js"></script>
+    <script src="src/edit/handler/Edit.Circle.js"></script>
+</head>
+
+<body>
+    <h1>Visita los sitios turísticos peruanos</h1>
+    <select name="select-location" id="select-location">
+        <option value="-1">Seleccione un lugar</option>
+        <option value="-13.163141,-72.544963">Machu Picchu</option>
+        <option value="-15.597222,-71.879167">Valle del Colca</option>
+        <option value="-14.716666,-75.133333">Líneas de Nazca</option>
+        <option value="-6.417916,-77.923333">Kuélap</option>
+        <option value="-13.735979,-76.394413">Islas Ballestas</option>
+        <option value="-10.893611,-77.520277">Caral</option>
+        <option value="-15.891744,-69.340921">Lago Titicaca</option>
+        <option value="-12.14,-71.66">Parque Nacional Manu</option>
+        <option value="-9.45,-77.43">Parque Nacional Huascarán</option>
+        <option value="-14.0875, -75.763333">Laguna de la Huacachina</option>
+        <option value="-8.110555,-79.075">Ciudadela Chan Chan</option>
+        <option value="-12.046374, -77.0427934">Centro de Lima</option>
+    </select>
+    <div id="map"></div>
+
+
+    <script src="Leaflet-MiniMap-master/dist/Control.MiniMap.min.js"></script>
+    <script src="Leaflet.Legend-master/src/leaflet.legend.js"></script>
+    <script src="https://unpkg.com/georaster"></script>
+    <script
+        src="https://unpkg.com/georaster-layer-for-leaflet@3.10.0/dist/v3/webpack/bundle/georaster-layer-for-leaflet.min.js"></script>
+    <script src="mapa.js"></script>
+</body>
+
+</html>
