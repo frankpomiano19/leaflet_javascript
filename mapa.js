@@ -27,12 +27,12 @@ var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         drawnItems.addLayer(layer);
     });
 
+var temp;
 
-
-document.getElementById('select-location').addEventListener('change', function (e)
+document.getElementById('ubicacion').addEventListener('change', function (e)
 {
     let coords = e.target.value.split(",");
-    map.flyTo(coords, 13);
+    map.flyTo(coords, 18);
 })
 
 //Agregar mapa base
@@ -49,10 +49,10 @@ var minimap = new L.Control.MiniMap(carto_light,
 //Agregar escala
 new L.control.scale({ imperial: false }).addTo(map);
 
-//Agregar el raster - en este caso la universidad
-var url_to_geotiff_file = "universidad.tif";
+//Agregar el raster dentro de una función
 
-fetch(url_to_geotiff_file)
+function mostrarRaster(url_to_geotiff_file) {
+    fetch(url_to_geotiff_file)
     .then(response => response.arrayBuffer())
     .then(arrayBuffer =>
     {
@@ -66,16 +66,42 @@ fetch(url_to_geotiff_file)
                 Just make sure to include the georaster option!
                 http://leafletjs.com/reference-1.2.0.html#gridlayer
             */
+                
             var layer = new GeoRasterLayer({
                 georaster: georaster,
                 opacity: 0.8,
                 resolution: 256
             });
+            console.log("layer:", layer);
+            console.log(layer.getBounds());
+            //layer.getBounds() devuelve los lìmites de la imagen TIFF
+            insertarUbicacion(layer.getBounds());
             layer.addTo(map);
             map.fitBounds(layer.getBounds());
-
         });
     });
+}
+
+//mostrarRaster("universidad.tif");
+//mostrarRaster("corte.tif");
+//mostrarRaster("odm_orthophoto.tif");
+//mostrarRaster("LOTE BUEY - NIR - 21 SEP.tif");
+//mostrarRaster("rios_1700_zonaB1.zip");
+
+var i = 1;
+
+function insertarUbicacion(limites) {
+    var selector = document.getElementById('ubicacion');
+    var option = document.createElement('option');
+    var latitudprom = (Object.entries(limites)[0][1]['lat'] + Object.entries(limites)[1][1]['lat'])/2;
+    var longitudprom = (Object.entries(limites)[0][1]['lng'] + Object.entries(limites)[1][1]['lng'])/2;
+    option.value = latitudprom+ ","+longitudprom;
+    option.innerHTML = "ubic_"+i;
+    i++;
+    selector.appendChild(option);
+}
+
+
 
 // Truncate value based on number of decimals
 var _round = function (num, len)
