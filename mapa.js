@@ -21,11 +21,7 @@ var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         }
     }));
 
-    map.on(L.Draw.Event.CREATED, function (event) {
-        var layer = event.layer;
-
-        drawnItems.addLayer(layer);
-    });
+   
 
 var temp;
 
@@ -82,13 +78,21 @@ function mostrarRaster(url_to_geotiff_file) {
     });
 }
 
-//mostrarRaster("universidad.tif");
-//mostrarRaster("corte.tif");
-//mostrarRaster("odm_orthophoto.tif");
+mostrarRaster("universidad.tif");
+mostrarRaster("corte.tif");
+mostrarRaster("odm_orthophoto.tif");
 //mostrarRaster("LOTE BUEY - NIR - 21 SEP.tif");
 //mostrarRaster("rios_1700_zonaB1.zip");
 
 var i = 1;
+var url ="poly1.json";
+
+var stateLayer = L.geoJson(null, {onEachFeature: forEachFeature,style:style});
+
+$.getJSON(url, function(data) {
+    stateLayer.addData(data);
+});
+
 
 function insertarUbicacion(limites) {
     var selector = document.getElementById('ubicacion');
@@ -122,11 +126,11 @@ var strLatLng = function (latlng)
         var getPopupContent = function (layer)
         {
             // Marker - add lat/long
-            if (layer instanceof L.Marker || layer instanceof L.CircleMarker)
+            if (layer instanceof L.Marker)
             {
                 return strLatLng(layer.getLatLng());
                 // Circle - lat/long, radius
-            } else if (layer instanceof L.Circle)
+            } else if (layer instanceof L.Circle || layer instanceof L.CircleMarker)
             {
                 var center = layer.getLatLng(),
                     radius = layer.getRadius();
@@ -152,14 +156,14 @@ var strLatLng = function (latlng)
                     distance = 0;
                 if (latlngs.length < 2)
                 {
-                    return "Distance: N/A";
+                    return "Distancia: N/A";
                 } else
                 {
                     for (var i = 0; i < latlngs.length - 1; i++)
                     {
                         distance += latlngs[i].distanceTo(latlngs[i + 1]);
                     }
-                    return "Distance: " + _round(distance, 2) + " m";
+                    return "Distancia: " + _round(distance, 2) + " m";
                 }
             }
             return null;
@@ -168,6 +172,7 @@ var strLatLng = function (latlng)
         // Object created - bind popup to layer, add to feature group
         map.on(L.Draw.Event.CREATED, function (event)
         {
+            //var type = event.layerType;
             var layer = event.layer;
             var content = getPopupContent(layer);
             if (content !== null)
@@ -175,6 +180,9 @@ var strLatLng = function (latlng)
                 layer.bindPopup(content);
             }
             drawnItems.addLayer(layer);
+            var geojson = drawnItems.toGeoJSON();
+            console.log(JSON.stringify(geojson));
+            console.log(geojson);
         });
 
         // Object(s) edited - update popups
@@ -191,3 +199,34 @@ var strLatLng = function (latlng)
                 }
             });
         });
+
+
+
+
+        function forEachFeature(feature, layer) {
+            var content = getPopupContent(layer);
+
+            if (content !== null)
+            {
+                layer.bindPopup(content);
+            }
+
+            drawnItems.addLayer(layer); 
+     }
+
+
+     function style(feature) {
+        return {
+            fillColor: 'green', 
+            fillOpacity: 0.5,  
+            weight: 2,
+            opacity: 1,
+            color: '#ffffff',
+            dashArray: '3'
+        };
+    }
+        var highlight = {
+            'fillColor': 'yellow',
+            'weight': 2,
+            'opacity': 1
+        };
